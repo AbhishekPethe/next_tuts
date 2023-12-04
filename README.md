@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+nextJS -> Lets say we are having a component where we fetch data from API
+when we use that component anywhere , we fetch the data 
+but the thing is , when we use that component anywhere many times throughout the code 
+NextJS wont fetch the data everytime leading to better performance
+NextJS catches that data so that if another fetch request of the same API happens 
+it will be faster 
+but there is possibility that Data might change in API , in that case 
+we need to Revalidate 
 
-## Getting Started
+fetch("https....." , {
+    next : {
+        revalidate : 30 
+    }
+})
 
-First, run the development server:
+after first page visit , if we visit page again within 30 seconds , data will come through cache
+If there is another page request after the timeframe , we still get the cached data and in the 
+background , NextJS will fetch the data from API and replace it with the cached data
+If we dont want to use cache at all , use revalidate : 0
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Link -> when link tag is used , nextJS fetches that Link page in the background for faster performance
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+getStaticParams() -> its like nextJS doesnt know how many pages there might be , so in order to cache all those page in cdn ,
+                    and improve the performance , we use this function 
+                    its like it creates a directory of all the pages we specified in the function and
+                    nextJS loades those pages in advance, READ MORE..
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
